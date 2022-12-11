@@ -10,7 +10,7 @@ import time
 
 
 # Forcefully sleep bot to prevent multiple bot instances from running when hosted
-time.sleep(5)
+# time.sleep(5)
 
 
 # KEY ENV VARIABLES
@@ -404,6 +404,5 @@ conv_handler = ConversationHandler(
 #Add the conversation handler to the dispatcher
 dispatcher.add_handler(conv_handler)
 
-while True:
-    #Start the bot
-    updater.start_polling()
+#Start the bot
+updater.start_polling()

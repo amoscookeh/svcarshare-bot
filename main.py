@@ -164,10 +164,10 @@ def usage_miles(update, context):
 
 def usage_tolls(update, context):
     try:
-        response = float(update.message.text)
+        response = int(update.message.text)
     except Exception:
         update.message.reply_text("Invalid toll amount")
-    context.user_data["toll"] = response
+    context.user_data["usage_toll"] = response
     # Prompt the user to enter a title for the usage
     update.message.reply_text("Please enter a title for the usage:")
     return "USAGE_TITLE"

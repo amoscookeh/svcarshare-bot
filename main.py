@@ -357,7 +357,7 @@ def end_conv(update, context):
     return ConversationHandler.END
 
 
-def end_conv(update, context):
+def fallback(update, context):
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text="Sorry, something went wrong."

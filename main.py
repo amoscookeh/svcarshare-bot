@@ -378,6 +378,7 @@ conv_handler = ConversationHandler(
             "ADD_USER": [MessageHandler(Filters.text & (~ Filters.command), add_user)],
             "USAGE_DATE": [MessageHandler(Filters.text & (~ Filters.command), usage_date)],
             "USAGE_MILES": [MessageHandler(Filters.text & (~ Filters.command), usage_miles)],
+            "USAGE_TOLLS": [MessageHandler(Filters.text & (~ Filters.command), usage_tolls)],
             "USAGE_TITLE": [MessageHandler(Filters.text & (~ Filters.command), usage_title)],
             "FUEL_USER": [MessageHandler(Filters.text & (~ Filters.command), fuel_user)],
             "FUEL_DATE": [MessageHandler(Filters.text & (~ Filters.command), fuel_date)],

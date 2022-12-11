@@ -356,6 +356,14 @@ def end_conv(update, context):
     )
     return ConversationHandler.END
 
+
+def end_conv(update, context):
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Sorry, something went wrong."
+    )
+    return ConversationHandler.END
+
 #Create the telegram bot
 bot = telegram.Bot(token=TELEBOT_KEY)
 
@@ -384,7 +392,7 @@ conv_handler = ConversationHandler(
             "FUEL_DATE": [MessageHandler(Filters.text & (~ Filters.command), fuel_date)],
             "FUEL_COST": [MessageHandler(Filters.text & (~ Filters.command), fuel_cost)]
         },
-    fallbacks=[CommandHandler("cancel", end_conv)],
+    fallbacks=[CommandHandler("cancel", end_conv), MessageHandler(Filters.all, fallback)],
 )
 
 #Add the conversation handler to the dispatcher

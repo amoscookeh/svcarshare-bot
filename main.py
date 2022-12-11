@@ -6,6 +6,12 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Conve
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import time
+
+
+# Forcefully sleep bot to prevent multiple bot instances from running when hosted
+time.sleep(5)
+
 
 # KEY ENV VARIABLES
 load_dotenv()

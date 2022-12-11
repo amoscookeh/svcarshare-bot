@@ -36,7 +36,7 @@ def start(update, context):
     # Prompt the user to select the users that utilised the car
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Welcome. Commands are /indicate_usage | /indicate_fuel",
+        text="Welcome. Commands: \n/indicate_usage - Indicate your usage \n/indicate_fuel - Indicate your fuel pump",
     )
     return ConversationHandler.END
 
@@ -131,7 +131,7 @@ def usage_date(update, context):
     # Store the usage date in the user data
     context.user_data["usage_date"] = usage_date
     # Prompt the user to enter the total miles driven
-    update.message.reply_text("Please enter the current number of miles driven:")
+    update.message.reply_text("Please enter the current number of miles shown on the dashboard:")
     return "USAGE_MILES"
 
 # Define the handler for receiving the user's response to the usage miles prompt
@@ -141,7 +141,10 @@ def usage_miles(update, context):
     usage_date = context.user_data["usage_date"] 
     # Validate the response
     try:
-        current_miles = float(response)
+        current_miles = int(response)
+        if current_miles < 1000:
+            update.message.reply_text("ERROR: Please enter the number of miles on the dashboard, not the number of miles driven.")
+            return
         prev_record = db["usage"].find_one({
                     "date": {"$lt": usage_date}
                 }, 

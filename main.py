@@ -328,8 +328,11 @@ def fuel_cost(update, context):
     for user, toll in user_tolls.items():
         user_amounts[user] += toll
     # Show the amount to be paid by each user
+    total_amount = 0
     for user, amount in user_amounts.items():
+        total_amount += amount
         update.message.reply_text(f"{user}: ${amount:.2f}")
+    update.message.reply_text(f"Total Amount (Including tolls): ${total_amount:.2f}")
     # Clear the user data
     context.user_data.clear()
     return ConversationHandler.END

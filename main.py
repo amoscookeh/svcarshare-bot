@@ -284,7 +284,7 @@ def fuel_cost(update, context):
     }
     db["fuel"].insert_one(fuel_data)
     prev_fuel_record = db["fuel"].find_one({
-            "date": {"$lt": fuel_date}
+            "date": {"$lte": fuel_date}
         }, 
         sort=[("date", -1)]
     )
@@ -293,7 +293,7 @@ def fuel_cost(update, context):
     # Get the total number of miles driven by each user since the last fuel pump
     usage_data = db["usage"].find({
             "date": {
-                "$lt": fuel_date,
+                "$lte": fuel_date,
                 "$gt": prev_fuel_date
         },
     })

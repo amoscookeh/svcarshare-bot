@@ -287,7 +287,7 @@ def fuel_cost(update, context):
     }
     db["fuel"].insert_one(fuel_data)
     prev_fuel_record = db["fuel"].find_one({
-            "date": {"$lte": fuel_date}
+            "date": {"$lt": fuel_date}
         }, 
         sort=[("date", -1)]
     )

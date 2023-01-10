@@ -322,7 +322,7 @@ def fuel_cost(update, context):
     user_amounts = {}
     for user, miles in user_miles.items():
         user_amounts[user] = fuel_cost * miles / sum(user_miles.values())
-    for user, toll in user_tolls:
+    for user, toll in user_tolls.values():
         user_amounts[user] += toll
     # Show the amount to be paid by each user
     for user, amount in user_amounts.items():

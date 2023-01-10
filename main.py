@@ -345,12 +345,12 @@ def view_records(update, context):
     output = output + "Usage Records"
     # Print the latest 10 usage records
     for record in latest_usage_records:
-        output = output + f"\nDate: {record['date']} - Users: {record['users']} - Miles: {record['miles']}"
+        output = output + f"\nDate: {record['date']} - {record['users']} drove {record['miles']} miles for {record['title']}"
     
     output = output + "\n\nFuel Records"
     # Print the latest 10 usage records
     for record in latest_fuel_records:
-        output = output + f"\nDate: {record['date']} - User: {record['user']} - Price: {record['cost']}"
+        output = output + f"\nDate: {record['date']} - {record['user']} paid ${record['cost']} for fuel"
     
     context.bot.send_message(
         chat_id=update.effective_chat.id,

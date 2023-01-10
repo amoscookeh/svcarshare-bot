@@ -39,6 +39,7 @@ date_keyboard = ReplyKeyboardMarkup(
 
 # Define the handler for the `/start` command
 def start(update, context):
+    print(f"{datetime.now()} - Logging Info: Start Called")
     # Prompt the user to select the users that utilised the car
     context.bot.send_message(
         chat_id=update.effective_chat.id,
@@ -48,6 +49,7 @@ def start(update, context):
 
 # Define the handler for the `/indicate_usage` command
 def indicate_usage(update, context):
+    print(f"{datetime.now()} - Logging Info: Indicate Usage Called")
     usage_users = context.user_data["usage_users"] = []
     return _indicate_usage(update, context)
 
@@ -213,6 +215,7 @@ def usage_title(update, context):
 
 #Define the handler for the /indicate_fuel command
 def indicate_fuel(update, context):
+    print(f"{datetime.now()} - Logging Info: Indicate Fuel Called")
     # Prompt the user to select the user that paid for the fuel
     context.bot.send_message(
         chat_id=update.effective_chat.id,
@@ -333,6 +336,7 @@ def fuel_cost(update, context):
 
 
 def view_records(update, context):
+    print(f"{datetime.now()} - Logging Info: View Records Called")
     output = ""
     # Query the collection for the latest 5 usage records
     latest_usage_records = db["usage"].find().sort("date", -1).limit(10)

@@ -385,7 +385,7 @@ def view_total_usage(update, context):
                 breakdown[user] = mileage_per_pax
     
     for user, usage in breakdown.items():
-        output = output + f"\n{user} --- {usage:.2f} miles [{usage / total_usage * 100}%]"
+        output = output + f"\n{user} --- {usage:.2f} miles [{usage / total_usage * 100:.2f}%]"
     
     context.bot.send_message(
         chat_id=update.effective_chat.id,

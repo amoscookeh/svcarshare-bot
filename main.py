@@ -342,8 +342,8 @@ def view_records(update, context):
     print(f"{datetime.now()} - Logging Info: View Records Called")
     output = ""
     # Query the collection for the latest 5 usage records
-    latest_usage_records = db["usage"].find().sort("date", -1).limit(10)
-    latest_fuel_records = db["fuel"].find().sort("date", -1).limit(10)
+    latest_usage_records = db["usage"].find().sort("date", -1).limit(5)
+    latest_fuel_records = db["fuel"].find().sort("date", -1).limit(5)
 
     output = output + "Usage Records"
     # Print the latest 10 usage records
@@ -354,6 +354,38 @@ def view_records(update, context):
     # Print the latest 10 usage records
     for record in latest_fuel_records:
         output = output + f"\nDate: {record['date']} - {record['user']} paid ${record['cost']} for fuel"
+    
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=output,
+    )
+    return ConversationHandler.END
+
+
+def view_total_usage(update, context):
+    print(f"{datetime.now()} - Logging Info: View Total Usage Called")
+    output = ""
+    # Query the collection for the latest 5 usage records
+    all_records = db["usage"].find().sort("date", -1)
+    breakdown = {}
+
+    output = output + f"Total Usage Records (as of {datetime.now().date()})"
+    total_usage = 0
+
+    # Sum up all usage
+    for record in all_records:
+        users: list[str] = record['users']
+        total_miles = record['miles']
+        total_usage += total_miles
+        mileage_per_pax = total_miles / len(users)
+        for user in users:
+            if user in breakdown.keys():
+                breakdown[user] += mileage_per_pax
+            else:
+                breakdown[user] = mileage_per_pax
+    
+    for user, usage in breakdown.items():
+        output = output + f"\n{user} --- {usage:.2f} miles [{usage / total_usage * 100}%]"
     
     context.bot.send_message(
         chat_id=update.effective_chat.id,
@@ -393,6 +425,7 @@ conv_handler = ConversationHandler(
         CommandHandler("indicate_usage", indicate_usage),
         CommandHandler("indicate_fuel", indicate_fuel),
         CommandHandler("view_records", view_records),
+        CommandHandler("view_total", view_total_usage),
     ],
     states={
             "USAGE_USERS": [MessageHandler(Filters.text & (~ Filters.command), usage_users)],

@@ -328,11 +328,16 @@ def fuel_cost(update, context):
     for user, toll in user_tolls.items():
         user_amounts[user] += toll
     # Show the amount to be paid by each user
+    message = f"Fuel Cost Breakdown - {fuel_date}\n<Username>: <Fuel Price> + <Toll Price> [<Mileage>]\n"
     total_amount = 0
     for user, amount in user_amounts.items():
         total_amount += amount
-        update.message.reply_text(f"{user}: ${amount:.2f}")
-    update.message.reply_text(f"Total Amount (Including tolls): ${total_amount:.2f}")
+        toll_price = user_tolls[user]
+        fuel_price = amount - toll_price
+        user_mile = user_miles[user]
+        message = message + f"\n{user}: ${fuel_price:.2f} + ${toll_price:.2f} [{user_mile:2f}]"
+    message = message + f"Total Amount (Including tolls): ${total_amount:.2f}"
+    update.message.reply_text(message)
     # Clear the user data
     context.user_data.clear()
     return ConversationHandler.END

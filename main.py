@@ -43,7 +43,7 @@ def start(update, context):
     # Prompt the user to select the users that utilised the car
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Welcome. Commands: \n/indicate_usage - Indicate your usage \n/indicate_fuel - Indicate your fuel pump",
+        text="Welcome to SVCarShareBot V1.1\nCommands: \n/indicate_usage - Indicate your usage \n/indicate_fuel - Indicate your fuel pump",
     )
     return ConversationHandler.END
 

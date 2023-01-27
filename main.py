@@ -15,6 +15,7 @@ import time
 
 # KEY ENV VARIABLES
 load_dotenv()
+ver_no = "V1.1.1" # Version <major feature>.<minor feature>.<fixes and style changes>
 TELEBOT_KEY = os.environ["TELEBOT_KEY"]
 MONGODB_USERNAME = os.environ["MONGODB_USERNAME"]
 MONGODB_PASSWORD = os.environ["MONGODB_PASSWORD"]
@@ -43,7 +44,7 @@ def start(update, context):
     # Prompt the user to select the users that utilised the car
     context.bot.send_message(
         chat_id=update.effective_chat.id,
-        text="Welcome to SVCarShareBot V1.1\nCommands: \n/indicate_usage - Indicate your usage \n/indicate_fuel - Indicate your fuel pump",
+        text=f"Welcome to SVCarShareBot {ver_no}\nCommands: \n/indicate_usage - Indicate your usage \n/indicate_fuel - Indicate your fuel pump",
     )
     return ConversationHandler.END
 
@@ -335,8 +336,8 @@ def fuel_cost(update, context):
         toll_price = user_tolls[user]
         fuel_price = amount - toll_price
         user_mile = user_miles[user]
-        message = message + f"\n{user}: ${fuel_price:.2f} + ${toll_price:.2f} [{user_mile:2f}]"
-    message = message + f"Total Amount (Including tolls): ${total_amount:.2f}"
+        message = message + f"\n{user}: ${fuel_price:.2f} + ${toll_price:.2f} [{user_mile:.2f}]"
+    message = message + f"\n\nTotal Amount (Including tolls): ${total_amount:.2f}"
     update.message.reply_text(message)
     # Clear the user data
     context.user_data.clear()
